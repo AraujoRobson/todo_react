@@ -1,12 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
-  const [lista, setLista] = useState(["Tarefa1", "Tarefa2"])
+  const [lista, setLista] = useState([])
   const [novoItem, setNovoItem] = useState()
+
+  useEffect(() => {
+    setLista(["Tarefa1", "Tarefa2", "Tarefa3", "Tarefa4"])
+  }, [])
 
   function adicionarNovoItem(){
     setLista([...lista, novoItem])
+    setNovoItem("")
   }
 
   return (
