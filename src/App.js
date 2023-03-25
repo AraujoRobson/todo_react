@@ -6,25 +6,50 @@ function App() {
   const [novoItem, setNovoItem] = useState()
 
   useEffect(() => {
-    setLista(["Tarefa1", "Tarefa2", "Tarefa3", "Tarefa4"])
+    setLista(["Tarefa 1", "Tarefa 2", "Tarefa 3", "Tarefa 4"])
   }, [])
 
-  function adicionarNovoItem(){
+  function adicionarNovoItem() {
+    if(novoItem.length <= 0){
+      alert("Digita algo no campo 'Tarefa'")
+      return
+    }
+
+    let itemIndex = lista.indexOf(novoItem)
+    if (itemIndex >= 0){
+      alert("Tarefa já existente.")
+      return
+    }
+
     setLista([...lista, novoItem])
     setNovoItem("")
   }
 
+  function deletarItem(index) {
+    const tmpArray = [...lista]
+    tmpArray.splice(index, 1)
+
+    setLista(tmpArray)
+  }
+
   return (
-    <>
+    <div className="container">
       <h1>Lista de Tarefas</h1>
 
-      <input value={novoItem} onChange={value => setNovoItem(value.target.value)} type="text" />
-      <button onClick={adicionarNovoItem}>Adicionar</button>
+      <div className='new-item'>
+        <input placeholder='Tarefa' value={novoItem} onChange={value => setNovoItem(value.target.value)} type="text" />
+        <button onClick={adicionarNovoItem}>Adicionar</button>
+      </div>
 
-      <ul>
-        {lista.map(item => <li>{item}</li>)}
+      <ul className='todo-list'>
+        {lista.map((item, index) => (
+          <li key={index} className='todo-item'>
+            {item}
+            <button onClick={() => deletarItem(index)}>Remover</button>
+          </li>
+        ))}
       </ul>
-    </>
+    </div>
   );
 }
 
